@@ -3,11 +3,15 @@
   "description": "Source surveys and responses from SurveyJS.",
   "author": "Brad Candell <bradcandell@gmail.com>",
   "license": "MIT",
-  "version": "1.5",
+  "version": "1.5.0",
   "bugs": {
     "url": "https://github.com/bradcandell/gatsby-source-surveyjs/issues"
   },
   "homepage": "https://github.com/BradCandell/gatsby-source-surveyjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BradCandell/gatsby-source-surveyjs"
+  },
   "keywords": [
     "gatsby",
     "gatsby-plugin",
