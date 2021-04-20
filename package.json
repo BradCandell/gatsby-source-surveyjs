@@ -1,0 +1,35 @@
+{
+  "name": "gatsby-source-surveyjs",
+  "description": "Source surveys and responses from SurveyJS.",
+  "author": "Brad Candell <bradcandell@gmail.com>",
+  "license": "MIT",
+  "version": "1.4.0-next.1",
+  "bugs": {
+    "url": "https://github.com/bradcandell/gatsby-source-surveyjs/issues"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin",
+    "survey",
+    "surveyjs"
+  ],
+  "peerDependencies": {
+    "gatsby": "^3.0.0-next.0"
+  },
+  "scripts": {},
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "axios": "^0.21.1",
+    "chalk": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3"
+  }
+}
