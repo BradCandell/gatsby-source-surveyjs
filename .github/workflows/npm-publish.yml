@@ -1,24 +1,40 @@
-name: Build and Release the Package
+name: Build and Release the "gatsby-source-surveyjs" Package
 
 on:
   workflow_dispatch:
-  release:
-    types: [created]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  build:
-    name: Build
+  increase-version:
+    name: Increase Semantic Versioning of Package
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Source Code Repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
 
-      - name: Setup Node.js Environment
+      - name: Setup the Node.js Environment
         uses: actions/setup-node@v2
         with:
           node-version: 12
-          registry-url: https://registry.npmjs.org/
 
+      - name: Increase Package Version
+        uses: "phips28/gh-action-bump-version@master"
+        id: version-increase
+        with:
+          tag-prefix: ""
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
@@ -31,11 +47,6 @@ jobs:
 
       - name: Build
         run: npm run prepare
-
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   # publish-npm:
   #   needs: build
