@@ -34,8 +34,8 @@ jobs:
       - name: Output the New Package Version
         env:
           NEW_TAG: ${{ steps.version-increase.outputs.newTag }}
-        run: echo "New Package Version: $NEW_TAG"
-        
+        run: echo "New Package Version = $NEW_TAG"
+
   # build:
   #   name: Build Project
   #   runs-on: ubuntu-latest
