@@ -65,23 +65,13 @@ jobs:
       - name: Build
         run: npm run prepare
 
-  # publish-npm:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 12
-  #         registry-url: https://registry.npmjs.org/
-  #     - run: npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
-  publish-gpr:
-    name: Publish to Github Package Repository
+  publish-npm:
+    name: Publish Package
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Source Code Repository
@@ -91,7 +81,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 12
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org/
 
       - name: Cache Dependencies
         uses: actions/cache@v2
@@ -103,7 +93,17 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Publish to Github
+      - name: Publish to NPM Registry
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+
+      - name: Reconfigure the Registry for a Github Publish
+        uses: actions/setup-node@v2
+        with:
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Publish to Github Package Registry
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
