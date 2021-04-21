@@ -1,4 +1,4 @@
-name: Build and Release the "gatsby-source-surveyjs" Package
+name: Build and Release
 
 on:
   workflow_dispatch:
@@ -28,6 +28,8 @@ jobs:
         id: version-increase
         with:
           tag-prefix: ""
+          major-wording: "MAJOR"
+          commit-message: "Increasing Package Version to {{version}}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -36,22 +38,24 @@ jobs:
           NEW_TAG: ${{ steps.version-increase.outputs.newTag }}
         run: echo "New Package Version = $NEW_TAG"
 
-  # build:
-  #   name: Build Project
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Cache Dependencies
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: |
-  #           **/node_modules
-  #         key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+  build:
+    name: Build Package
+    runs-on: ubuntu-latest
+    needs: increase-version
 
-  #     - name: Install Dependencies
-  #       run: npm install
+    steps:
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-  #     - name: Build
-  #       run: npm run prepare
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run prepare
 
   # publish-npm:
   #   needs: build
@@ -62,21 +66,20 @@ jobs:
   #       with:
   #         node-version: 12
   #         registry-url: https://registry.npmjs.org/
-  #     - run: npm ci
   #     - run: npm publish
   #       env:
   #         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
-  # publish-gpr:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 12
-  #         registry-url: https://npm.pkg.github.com/
-  #     - run: npm ci
-  #     - run: npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  publish-gpr:
+    name: Publish to Github Package Repository
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
