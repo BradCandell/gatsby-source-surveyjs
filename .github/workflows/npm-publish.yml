@@ -31,22 +31,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build:
-    name: Build Project
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Output the New Package Version
+        env:
+          NEW_TAG: ${{ steps.version-increase.outputs.newTag }}
+        run: echo "New Package Version: $NEW_TAG"
+        
+  # build:
+  #   name: Build Project
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Cache Dependencies
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           **/node_modules
+  #         key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Install Dependencies
-        run: npm install
+  #     - name: Install Dependencies
+  #       run: npm install
 
-      - name: Build
-        run: npm run prepare
+  #     - name: Build
+  #       run: npm run prepare
 
   # publish-npm:
   #   needs: build
