@@ -3,7 +3,7 @@
   "description": "Source surveys and responses from SurveyJS.",
   "author": "Brad Candell <bradcandell@gmail.com>",
   "license": "MIT",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "bugs": {
     "url": "https://github.com/bradcandell/gatsby-source-surveyjs/issues"
   },
@@ -22,13 +22,17 @@
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
   "engines": {
     "node": ">=12.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "axios": "^0.21.1",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
     "chalk": "^4.1.0"
   },
   "devDependencies": {
@@ -36,5 +40,6 @@
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^1.4.0-next.0",
     "cross-env": "^7.0.3"
-  }
+  },
+  "main": "index.js"
 }

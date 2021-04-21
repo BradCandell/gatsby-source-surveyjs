@@ -19,12 +19,15 @@ After creating your account on the [SurveyJS Cloud Service][surveyjs-cloud], you
 
 Then, in your `gatby-config.js` add the following:
 
-```json
-plugins: [
-  resolve: "gatsby-source-surveyjs",
-  options: {
-    accessKey: "example-3462324256as26243sk3d93",
-  },
+```js
+module.exports = {
+  plugins: [
+  {
+    resolve: "gatsby-source-surveyjs",
+    options: {
+      accessKey: "example-3462324256as26243sk3d93",
+    }
+  }
 ];
 ```
 
