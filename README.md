@@ -1,10 +1,14 @@
 # gatsby-source-surveyjs
 
-Source plugin for pulling surveys and their responses into [Gatsby][gatsby] from the [SurveyJS.io][surveyjs] service.
+![npm](https://img.shields.io/npm/v/gatsby-source-surveyjs)
+![npm](https://img.shields.io/npm/dm/gatsby-source-surveyjs)
+[![Build and Release](https://github.com/BradCandell/gatsby-source-surveyjs/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/BradCandell/gatsby-source-surveyjs/actions/workflows/npm-publish.yml)
+
+Source plugin for pulling surveys into [Gatsby][gatsby] from the [SurveyJS.io][surveyjs] service.
 
 ## Features
 
-- Provides survey and response data via the SurveyJS [Public][surveyjs-public] and [Private][surveyjs-private] APIs
+- Provides survey data via the SurveyJS [Public][surveyjs-public] and [Private][surveyjs-private] APIs
 - Simplifies the integration of the `survey-react` within Gatsby
 
 ## Install
